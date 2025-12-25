@@ -33,9 +33,9 @@ export const fetchNonVegProducts = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          error.response?.data?.error ||
-          error.message ||
-          "Something went wrong"
+        error.response?.data?.error ||
+        error.message ||
+        "Something went wrong"
       );
     }
   }

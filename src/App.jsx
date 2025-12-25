@@ -175,6 +175,7 @@ import emailjs from "@emailjs/browser";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+// Initialize EmailJS
 emailjs.init("rlIFalEFE2D4uPb1C");
 
 // Pages
@@ -183,8 +184,8 @@ import Veg from "./Veg";
 import Nonveg from "./Nonveg";
 import Drink from "./Drink";
 import Cart from "./Cart";
-import Contact from "./contact";
-import About from "./about";
+import Contact from "./Contact";
+import About from "./About";
 import Orders from "./Orders";
 import Register from "./Register";
 import Login from "./Login";
@@ -212,7 +213,6 @@ const Logout = ({ setIsLoggedIn }) => {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const cartItems = [];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -230,13 +230,27 @@ function App() {
 
           <div className="collapse navbar-collapse show">
             <ul className="navbar-nav me-auto">
-              <li className="nav-item"><NavLink className="nav-link" to="/">Home</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/veg">Veg</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/nonveg">Non Veg</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/drink">Drinks</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/contact">Contact</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/about">About</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/order">Orders</NavLink></li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/">Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/veg">Veg</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/nonveg">Non Veg</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/drink">Drinks</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/contact">Contact</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/about">About</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/order">Orders</NavLink>
+              </li>
             </ul>
 
             <div className="d-flex gap-2">
@@ -271,13 +285,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/order" element={<Orders />} />
-
-        {/* ✅ FIXED HERE */}
         <Route
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
-
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
@@ -288,3 +299,4 @@ function App() {
 }
 
 export default App;
+
