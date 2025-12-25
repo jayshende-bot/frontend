@@ -186,7 +186,7 @@ import drinkReducer from "./drinkSlice";
 
 // ⭐ Global axios instance
 export const apiurl = axios.create({
-  baseURL: "https://backend-ten-flame-49.vercel.app/",
+  baseURL: "https://backend-blue-eight-28.vercel.app/",
 });
 
 // ⭐ Add token automatically

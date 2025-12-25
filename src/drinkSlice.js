@@ -5,7 +5,7 @@ import axios from "axios";
 // LOCAL AXIOS INSTANCE
 // ------------------------------------------------------
 const apiurl = axios.create({
-  baseURL: "https://backend-ten-flame-49.vercel.app/",
+  baseURL: "https://backend-blue-eight-28.vercel.app/",
 });
 
 // Attach token automatically

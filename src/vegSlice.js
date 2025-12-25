@@ -224,7 +224,7 @@ import axios from "axios";
 // AXIOS INSTANCE
 // ------------------------------------------------------
 const api = axios.create({
-  baseURL: "https://backend-ten-flame-49.vercel.app/api/v1",
+  baseURL: "https://backend-blue-eight-28.vercel.app/api/v1",
 });
 
 // ------------------------------------------------------
