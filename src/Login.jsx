@@ -29,7 +29,7 @@
 //     setLoading(true);
 
 //     try {
-//       const res = await fetch("https://backend-blue-eight-28.vercel.app/api/v1/products/login", {
+//       const res = await fetch("https://tasty-bites-backend.vercel.app/api/v1/products/login", {
 //         method: "POST",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify(formData),
@@ -205,7 +205,7 @@ const Login = ({ setIsLoggedIn }) => {
 
     try {
       const res = await fetch(
-        "https://backend-blue-eight-28.vercel.app/api/v1/products/login",
+        "https://tasty-bites-backend.vercel.app/api/v1/products/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

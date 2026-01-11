@@ -5,7 +5,7 @@ import axios from "axios";
 // LOCAL AXIOS INSTANCE
 // ------------------------------------------------------
 const apiurl = axios.create({
-  baseURL: "https://backend-blue-eight-28.vercel.app/",
+  baseURL: "https://tasty-bites-backend.vercel.app/",
 });
 
 // Attach token automatically

@@ -7,7 +7,7 @@
 // // AXIOS INSTANCE (with token support)
 // // ------------------------------------------------------
 // const apiurl = axios.create({
-//   baseURL: "https://backend-blue-eight-28.vercel.app/api/v1", // backend base URL
+//   baseURL: "https://tasty-bites-backend.vercel.app/api/v1", // backend base URL
 // });
 
 // // Attach token automatically for every request
@@ -103,7 +103,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const apiurl = axios.create({
-  baseURL: "https://backend-blue-eight-28.vercel.app/api/v1",
+  baseURL: "https://tasty-bites-backend.vercel.app/api/v1",
 });
 
 // Attach token automatically for every request

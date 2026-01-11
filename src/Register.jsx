@@ -377,7 +377,7 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
 
     try {
       const res = await fetch(
-        "https://backend-blue-eight-28.vercel.app/api/v1/products/register",
+        "https://tasty-bites-backend.vercel.app/api/v1/products/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
