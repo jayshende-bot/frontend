@@ -360,20 +360,33 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
     setLoading(true);
 
     // Trim values
+    // const payload = {
+    //   ...formData,
+    //   name: formData.name.trim(),
+    //   email: formData.email.trim(),
+    //   password: formData.password.trim(),
+    //   phone: formData.phone.trim(),
+    //   address: {
+    //     house: formData.address.house.trim(),
+    //     street: formData.address.street.trim(),
+    //     city: formData.address.city.trim(),
+    //     state: formData.address.state.trim(),
+    //     pincode: formData.address.pincode.trim(),
+    //   },
+    // };
+
+
+
     const payload = {
-      ...formData,
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      password: formData.password.trim(),
-      phone: formData.phone.trim(),
-      address: {
-        house: formData.address.house.trim(),
-        street: formData.address.street.trim(),
-        city: formData.address.city.trim(),
-        state: formData.address.state.trim(),
-        pincode: formData.address.pincode.trim(),
-      },
-    };
+  name: formData.name.trim(),
+  email: formData.email.trim(),
+  password: formData.password.trim(),
+  phone: formData.phone.trim(),
+
+  // ✅ convert object to string
+  address: `${formData.address.house}, ${formData.address.street}, ${formData.address.city}, ${formData.address.state} - ${formData.address.pincode}`,
+};
+
 
     try {
       const res = await fetch(
