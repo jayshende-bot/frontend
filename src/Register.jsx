@@ -284,15 +284,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -306,33 +297,20 @@ const Register = ({ setIsLoggedIn = () => {} }) => {
     email: "",
     password: "",
     phone: "",
-    address: {
-      house: "",
-      street: "",
-      city: "",
-      state: "",
-      pincode: "",
-    },
+    address: { house: "", street: "", city: "", state: "", pincode: "" },
   });
 
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if (["house", "street", "city", "state", "pincode"].includes(name)) {
       setFormData((prev) => ({
         ...prev,
-        address: {
-          ...prev.address,
-          [name]: value,
-        },
+        address: { ...prev.address, [name]: value },
       }));
     } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -340,13 +318,32 @@ const Register = ({ setIsLoggedIn = () => {} }) => {
     e.preventDefault();
     setLoading(true);
 
+    // Trim all fields
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),
       password: formData.password.trim(),
       phone: formData.phone.trim(),
-      address: `${formData.address.house}, ${formData.address.street}, ${formData.address.city}, ${formData.address.state} - ${formData.address.pincode}`,
+      address: `${formData.address.house.trim()}, ${formData.address.street.trim()}, ${formData.address.city.trim()}, ${formData.address.state.trim()} - ${formData.address.pincode.trim()}`,
     };
+
+    // Frontend validation
+    if (
+      !payload.name ||
+      !payload.email ||
+      !payload.password ||
+      !payload.phone ||
+      !payload.address.replace(/,/g, "").trim()
+    ) {
+      Swal.fire({
+        title: "Error",
+        text: "All fields are required",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(
@@ -542,10 +539,6 @@ const Register = ({ setIsLoggedIn = () => {} }) => {
   );
 };
 
-const inputStyle = {
-  borderRadius: "10px",
-  padding: "10px",
-  border: "1px solid #ced4da",
-};
+const inputStyle = { borderRadius: "10px", padding: "10px", border: "1px solid #ced4da" };
 
 export default Register;
