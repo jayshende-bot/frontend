@@ -368,6 +368,217 @@
 
 
 
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector, shallowEqual } from "react-redux";
+// import { getUserOrders } from "./orderSlice";
+// import { QRCodeCanvas } from "qrcode.react";
+
+// function Orders() {
+//   const dispatch = useDispatch();
+//   const [selectedOrder, setSelectedOrder] = useState(null); // modal order
+//   const [showModal, setShowModal] = useState(false);
+
+//   const { userOrders, loading, error } = useSelector(
+//     (state) => ({
+//       userOrders: state.orders?.userOrders || [],
+//       loading: state.orders?.loading || false,
+//       error: state.orders?.error || null,
+//     }),
+//     shallowEqual
+//   );
+
+//   useEffect(() => {
+//     const userEmail = localStorage.getItem("userEmail") || "guest@example.com";
+//     dispatch(getUserOrders(userEmail));
+//   }, [dispatch]);
+
+//   if (loading)
+//     return (
+//       <div className="text-center p-5">
+//         <h4 className="text-muted">Loading orders...</h4>
+//       </div>
+//     );
+
+//   if (error)
+//     return (
+//       <div className="text-center p-5">
+//         <h4 className="text-danger">Error loading orders: {error}</h4>
+//       </div>
+//     );
+
+//   const openModal = (order) => {
+//     setSelectedOrder(order);
+//     setShowModal(true);
+//   };
+
+//   const closeModal = () => {
+//     setSelectedOrder(null);
+//     setShowModal(false);
+//   };
+
+//   const gstRate = 5;
+
+//   return (
+//     <div className="container py-4">
+//       <h2 className="text-center mb-5 fw-bold">🧾 Your Orders</h2>
+
+//       {userOrders.length === 0 ? (
+//         <p className="text-center text-muted fs-5">No orders found.</p>
+//       ) : (
+//         <div className="row g-4">
+//           {userOrders.map((order, index) => (
+//             <div
+//               key={order._id || index}
+//               className="col-md-6"
+//               onClick={() => openModal(order)}
+//               style={{ cursor: "pointer" }}
+//             >
+//               <div className="card shadow-sm p-3 h-100">
+//                 <h5 className="fw-bold mb-2">Order #{index + 1}</h5>
+//                 <p className="text-secondary mb-1">
+//                   Placed on:{" "}
+//                   {new Date(order.createdAt).toLocaleDateString("en-IN", {
+//                     day: "2-digit",
+//                     month: "short",
+//                     year: "numeric",
+//                   })}
+//                 </p>
+//                 <p className="mb-0">
+//                   Items: {order.items?.length || 0} | Total: ₹
+//                   {order.grandTotal?.toFixed(2) ||
+//                     (order.items?.reduce(
+//                       (sum, i) => sum + i.price * i.quantity,
+//                       0
+//                     ) || 0).toFixed(2)}
+//                 </p>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+
+//       {/* ---------------- MODAL ---------------- */}
+//       {showModal && selectedOrder && (
+//         <div
+//           className="modal fade show d-block"
+//           tabIndex="-1"
+//           style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+//         >
+//           <div className="modal-dialog modal-lg">
+//             <div className="modal-content rounded-4">
+//               <div className="modal-header">
+//                 <h5 className="modal-title">Order Details</h5>
+//                 <button
+//                   type="button"
+//                   className="btn-close"
+//                   onClick={closeModal}
+//                 ></button>
+//               </div>
+
+//               <div className="modal-body">
+//                 <h6 className="fw-bold mb-3">Items Purchased:</h6>
+//                 <div className="table-responsive">
+//                   <table className="table table-sm table-striped">
+//                     <thead>
+//                       <tr>
+//                         <th>Product</th>
+//                         <th className="text-center">Qty</th>
+//                         <th className="text-end">Unit Price</th>
+//                         <th className="text-end">Total</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//                       {selectedOrder.items?.map((item, i) => (
+//                         <tr key={i}>
+//                           <td>
+//                             <img
+//                               src={item.image || item.img || item.photo}
+//                               alt={item.name}
+//                               style={{
+//                                 width: "40px",
+//                                 height: "40px",
+//                                 objectFit: "cover",
+//                                 borderRadius: "5px",
+//                                 marginRight: "10px",
+//                               }}
+//                             />
+//                             {item.name}
+//                           </td>
+//                           <td className="text-center">{item.quantity}</td>
+//                           <td className="text-end">₹{item.price.toFixed(2)}</td>
+//                           <td className="text-end fw-bold">
+//                             ₹{(item.price * item.quantity).toFixed(2)}
+//                           </td>
+//                         </tr>
+//                       ))}
+//                     </tbody>
+//                   </table>
+//                 </div>
+
+//                 <hr />
+
+//                 <div className="d-flex justify-content-between">
+//                   <span>Subtotal:</span>
+//                   <span>
+//                     ₹
+//                     {selectedOrder.items?.reduce(
+//                       (sum, i) => sum + i.price * i.quantity,
+//                       0
+//                     ).toFixed(2)}
+//                   </span>
+//                 </div>
+//                 <div className="d-flex justify-content-between text-danger">
+//                   <span>Discount:</span>
+//                   <span>₹{selectedOrder.totalDiscount?.toFixed(2) || 0}</span>
+//                 </div>
+//                 <div className="d-flex justify-content-between text-primary">
+//                   <span>GST ({gstRate}%):</span>
+//                   <span>
+//                     ₹
+//                     {selectedOrder.gst?.toFixed(2) ||
+//                       (
+//                         selectedOrder.items?.reduce(
+//                           (sum, i) => sum + i.price * i.quantity,
+//                           0
+//                         ) * (gstRate / 100)
+//                       ).toFixed(2)}
+//                   </span>
+//                 </div>
+//                 <div className="d-flex justify-content-between fw-bold text-success fs-5 mt-2">
+//                   <span>Grand Total:</span>
+//                   <span>₹{selectedOrder.grandTotal?.toFixed(2)}</span>
+//                 </div>
+
+//                 {/* QR Code */}
+//                 <div className="text-center mt-4">
+//                   <h6>Scan & Pay</h6>
+//                   <QRCodeCanvas
+//                     value={`upi://pay?pa=8208466451@axl&pn=Tasty%20Bites&am=${selectedOrder.grandTotal}&cu=INR`}
+//                     size={150}
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className="modal-footer">
+//                 <button className="btn btn-secondary" onClick={closeModal}>
+//                   Close
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default Orders;
+
+
+
+
+
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { getUserOrders } from "./orderSlice";
@@ -375,7 +586,7 @@ import { QRCodeCanvas } from "qrcode.react";
 
 function Orders() {
   const dispatch = useDispatch();
-  const [selectedOrder, setSelectedOrder] = useState(null); // modal order
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const { userOrders, loading, error } = useSelector(
@@ -388,8 +599,13 @@ function Orders() {
   );
 
   useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail") || "guest@example.com";
-    dispatch(getUserOrders(userEmail));
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    const token = localStorage.getItem("token");
+
+    if (userData?.email && token) {
+      // ✅ Pass both email and token to your thunk
+      dispatch(getUserOrders({ email: userData.email, token }));
+    }
   }, [dispatch]);
 
   if (loading)

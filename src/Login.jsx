@@ -205,17 +205,18 @@ const Login = ({ setIsLoggedIn }) => {
 
     try {
       const res = await fetch(
-        "https://tasty-bites-backend.vercel.app/api/v1/products/login",
+        "https://tasty-bites-backend.vercel.app/api/v1/login", // ✅ corrected to match backend
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
       );
+
       const data = await res.json();
 
-      if (data.success) {
-        // ✅ Store token separately for backend auth
+      if (res.ok && data.success) {
+        // ✅ Store token
         localStorage.setItem("token", data.token);
 
         // ✅ Store user info
@@ -235,7 +236,7 @@ const Login = ({ setIsLoggedIn }) => {
       } else {
         Swal.fire({
           title: "Error",
-          text: data.error || "Invalid credentials",
+          text: data.message || "Invalid credentials", // ✅ use backend's message
           icon: "error",
           confirmButtonColor: "#d33",
         });
