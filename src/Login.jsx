@@ -29,7 +29,7 @@
 //     setLoading(true);
 
 //     try {
-//       const res = await fetch("https://tasty-bites-backend.vercel.app/api/v1/products/login", {
+//       const res = await fetch("https://tasty-bites-backend.vercel.app/api/v1/login", {
 //         method: "POST",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify(formData),
