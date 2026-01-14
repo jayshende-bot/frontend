@@ -43,7 +43,7 @@
 //   async (orderData, { rejectWithValue }) => {
 //     try {
 //       // Matches backend route: POST /api/v1/products/orders
-//       const res = await apiurl.post("/products/orders", orderData);
+//       const res = await apiurl.post("/orders", orderData);
 //       return res.data.data; // backend returns { success: true, data: order }
 //     } catch (err) {
 //       return rejectWithValue(err.response?.data?.message || err.message);
@@ -117,7 +117,7 @@ export const getUserOrders = createAsyncThunk(
   "orders/getUserOrders",
   async (email, { rejectWithValue }) => {
     try {
-      const res = await apiurl.get(`/products/orders/user/${email}`);
+      const res = await apiurl.get(`/orders/user/${email}`);
       return res.data.data || [];
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -153,7 +153,7 @@ export const createNewOrder = createAsyncThunk(
           "Each item must have productId(string), id(string), name(string), price(number), quantity(number)."
         );
 
-      const res = await apiurl.post("/products/orders", { email, items });
+      const res = await apiurl.post("/orders", { email, items });
 
       return res.data.data;
     } catch (err) {

@@ -60,6 +60,11 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
       if (!res.ok) throw new Error(data.message || "Registration failed");
 
       localStorage.setItem("token", data.token);
+
+      // ✅ Store user info (same as Login)
+      const userData = { email: data.user.email, name: data.user.name };
+      localStorage.setItem("user", JSON.stringify(userData));
+
       setIsLoggedIn(true);
 
       Swal.fire("Success", "Registered Successfully", "success");
