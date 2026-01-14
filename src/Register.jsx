@@ -30,18 +30,14 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
     e.preventDefault();
     setLoading(true);
 
+    const address = `${formData.house}, ${formData.street}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
+
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),
       password: formData.password.trim(),
       phone: formData.phone.trim(),
-      address: {
-        house: formData.house.trim(),
-        street: formData.street.trim(),
-        city: formData.city.trim(),
-        state: formData.state.trim(),
-        pincode: formData.pincode.trim(),
-      },
+      address: address.trim(),
     };
 
     if (Object.values(payload).some((v) => !v)) {
