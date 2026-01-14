@@ -40,7 +40,7 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
         street: formData.street.trim(),
         city: formData.city.trim(),
         state: formData.state.trim(),
-        pincode: formData.pincode.trim(),
+        pincode: Number(formData.pincode.trim()),
       },
     };
 
