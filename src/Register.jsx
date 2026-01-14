@@ -34,13 +34,13 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
       name: formData.name.trim(),
       email: formData.email.trim(),
       password: formData.password.trim(),
-      phone: Number(formData.phone.trim()),
+      phone: formData.phone.trim(),
       address: {
         house: formData.house.trim(),
         street: formData.street.trim(),
         city: formData.city.trim(),
         state: formData.state.trim(),
-        pincode: Number(formData.pincode.trim()),
+        pincode: formData.pincode.trim(),
       },
     };
 
