@@ -30,15 +30,22 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
     e.preventDefault();
     setLoading(true);
 
-    const address = `${formData.house}, ${formData.street}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
+    
 
-    const payload = {
-      name: String(formData.name).trim(),
-      email: String(formData.email).trim(),
-      password: String(formData.password).trim(),
-      phone: String(formData.phone).trim(),
-      address: address.trim(),
-    };
+   const payload = {
+  name: formData.name.trim(),
+  email: formData.email.trim(),
+  password: formData.password.trim(),
+  phone: formData.phone.trim(),
+  address: {
+    house: formData.house.trim(),
+    street: formData.street.trim(),
+    city: formData.city.trim(),
+    state: formData.state.trim(),
+    pincode: formData.pincode.trim(),
+  },
+};
+
 
     if (Object.values(payload).some((v) => !v)) {
       Swal.fire("Error", "All fields are required", "error");
