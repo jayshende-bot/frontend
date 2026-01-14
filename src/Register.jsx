@@ -57,6 +57,8 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
       );
 
       const data = await res.json();
+      console.log("Registration response:", data); // ✅ Debug log
+
       if (!res.ok) throw new Error(data.message || "Registration failed");
 
       localStorage.setItem("token", data.token);
@@ -64,6 +66,8 @@ const Register = ({ setIsLoggedIn = () => { } }) => {
       // ✅ Store user info (same as Login)
       const userData = { email: data.user.email, name: data.user.name };
       localStorage.setItem("user", JSON.stringify(userData));
+
+      console.log("Saved to localStorage:", { token: data.token, user: userData }); // ✅ Debug log
 
       setIsLoggedIn(true);
 

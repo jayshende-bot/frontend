@@ -214,6 +214,7 @@ const Login = ({ setIsLoggedIn }) => {
       );
 
       const data = await res.json();
+      console.log("Login response:", data); // ✅ Debug log
 
       if (res.ok && data.success) {
         // ✅ Store token
@@ -222,6 +223,8 @@ const Login = ({ setIsLoggedIn }) => {
         // ✅ Store user info
         const userData = { email: data.user.email, name: data.user.name };
         localStorage.setItem("user", JSON.stringify(userData));
+
+        console.log("Saved to localStorage:", { token: data.token, user: userData }); // ✅ Debug log
 
         setIsLoggedIn(true);
 
