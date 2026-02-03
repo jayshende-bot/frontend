@@ -115,10 +115,18 @@ apiurl.interceptors.request.use((config) => {
 
 export const getUserOrders = createAsyncThunk(
   "orders/getUserOrders",
-  async (email, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
     try {
+      // ✅ Handle both string (email) and object ({ email, token }) arguments
+      const email = arg && typeof arg === "object" ? arg.email : arg;
+
       const res = await apiurl.get(`/orders/user/${email}`);
-      return res.data.data || [];
+      console.log("Fetched Orders Response:", res.data); // ✅ Debug log
+
+      // ✅ Check for common data locations to ensure we find the array
+      if (Array.isArray(res.data.data)) return res.data.data;
+      if (Array.isArray(res.data.orders)) return res.data.orders;
+      return [];
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
