@@ -30,7 +30,7 @@
 //     e.preventDefault();
 //     setLoading(true);
 
-    
+
 
 //    const payload = {
 //   name: formData.name.trim(),
@@ -197,7 +197,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Register = ({ setIsLoggedIn = () => {} }) => {
+const Register = ({ setIsLoggedIn = () => { } }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -273,7 +273,11 @@ const Register = ({ setIsLoggedIn = () => {} }) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem(
         "user",
-        JSON.stringify({ email: data.user.email, name: data.user.name })
+        JSON.stringify({
+          _id: data.user._id,
+          email: data.user.email,
+          name: data.user.name,
+        })
       );
 
       setIsLoggedIn(true);

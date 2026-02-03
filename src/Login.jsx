@@ -221,7 +221,11 @@ const Login = ({ setIsLoggedIn }) => {
         localStorage.setItem("token", data.token);
 
         // ✅ Store user info
-        const userData = { email: data.user.email, name: data.user.name };
+        const userData = {
+          _id: data.user._id,
+          email: data.user.email,
+          name: data.user.name,
+        };
         localStorage.setItem("user", JSON.stringify(userData));
 
         console.log("Saved to localStorage:", { token: data.token, user: userData }); // ✅ Debug log
