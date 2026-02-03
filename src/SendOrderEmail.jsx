@@ -41,7 +41,7 @@
 //                 setStatusMessage("Failed to send email. Check console for details. 😢");
 //             });
 //     };
-    
+
 //     // Determine button state and message styling
 //     const isSending = status === "sending";
 //     const isSuccess = status === "success";
@@ -85,11 +85,15 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 
 function SendOrderEmail({ orderId, totalAmount, tax }) {
-  const [email, setEmail] = useState("");
+  // ✅ Pre-populate email from localStorage
+  const [email, setEmail] = useState(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user?.email || "";
+  });
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
@@ -113,10 +117,11 @@ function SendOrderEmail({ orderId, totalAmount, tax }) {
     const TEMPLATE_ID = "template_nqmbems";
     const PUBLIC_KEY = "rlIFalEFE2D4uPb1C";
 
+    // ✅ Use parameter names that are more likely to match your EmailJS template
     const templateParams = {
-      to_email: email,
+      user_email: email,
       order_id: orderId,
-      total_amount: Number(totalAmount).toFixed(2),
+      final_amount: Number(totalAmount).toFixed(2),
       tax: Number(tax).toFixed(2),
     };
 
@@ -156,13 +161,12 @@ function SendOrderEmail({ orderId, totalAmount, tax }) {
 
       {message && (
         <p
-          className={`mt-2 fw-bold ${
-            status === "error"
+          className={`mt-2 fw-bold ${status === "error"
               ? "text-danger"
               : status === "success"
-              ? "text-success"
-              : "text-dark"
-          }`}
+                ? "text-success"
+                : "text-dark"
+            }`}
         >
           {message}
         </p>

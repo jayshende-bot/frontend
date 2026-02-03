@@ -7,6 +7,7 @@ const Logout = ({ setIsLoggedIn }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove token
+    localStorage.removeItem("user"); // ✅ Also remove user data
     setIsLoggedIn(false); // Update login state in App
     navigate("/login"); // Redirect to login page
   };

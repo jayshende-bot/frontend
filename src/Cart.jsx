@@ -307,13 +307,20 @@ function Cart() {
     const orderData = {
       email: user.email,
       items: itemsForOrder,
+      // ✅ Sending the full order summary to the backend
+      subtotal,
+      gst: gstAmount,
+      discount,
+      deliveryCharge,
+      grandTotal,
     };
 
     try {
       const response = await dispatch(createNewOrder(orderData)).unwrap();
 
       setLastOrderData({
-        orderId: response._id,
+        // ✅ Correctly access the nested order ID from the response
+        orderId: response.order._id,
         totalAmount: grandTotal,
         tax: gstAmount,
       });
