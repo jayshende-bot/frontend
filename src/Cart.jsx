@@ -316,10 +316,21 @@ function Cart() {
     };
 
     try {
+      // The .unwrap() method will return the payload of a fulfilled action,
+      // or throw an error if the action is rejected.
       const response = await dispatch(createNewOrder(orderData)).unwrap();
 
+      // Log the response to see what the backend is actually sending.
+      // This is crucial for debugging.
+      console.log("Create order response from backend:", response);
+
+      // Defensive check: Ensure the response and its nested properties exist before using them.
+      // If the response is not what we expect, throw an error to be caught by the catch block.
+      if (!response || !response.order || !response.order._id) {
+        throw new Error("Order creation failed: Invalid response from server.");
+      }
+
       setLastOrderData({
-        // ✅ Correctly access the nested order ID from the response
         orderId: response.order._id,
         totalAmount: grandTotal,
         tax: gstAmount,
@@ -328,11 +339,9 @@ function Cart() {
       dispatch(clearCart());
       Swal.fire("Success", "Order placed successfully!", "success");
     } catch (error) {
-      Swal.fire(
-        "Order Failed",
-        error?.message || "Something went wrong!",
-        "error"
-      );
+      // Log the detailed error to the console for better debugging.
+      console.error("Checkout failed:", error);
+      Swal.fire("Order Failed", error?.message || "Something went wrong!", "error");
     }
   };
 

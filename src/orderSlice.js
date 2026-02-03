@@ -155,8 +155,14 @@ export const createNewOrder = createAsyncThunk(
 
       const res = await apiurl.post("/orders", { email, items });
 
+      // ✅ Validate response structure before returning
+      if (!res.data || !res.data.data) {
+        throw new Error("Invalid response received from server.");
+      }
+
       return res.data.data;
     } catch (err) {
+      console.error("Create Order Error:", err); // ✅ Log for debugging
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
