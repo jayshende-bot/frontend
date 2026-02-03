@@ -153,14 +153,18 @@ export const createNewOrder = createAsyncThunk(
           "Each item must have productId(string), id(string), name(string), price(number), quantity(number)."
         );
 
-      const res = await apiurl.post("/orders", { email, items });
+      // Pass the full orderData object, not just parts of it.
+      const res = await apiurl.post("/orders", orderData);
 
       // ✅ Validate response structure before returning
-      if (!res.data || !res.data.data) {
-        throw new Error("Invalid response received from server.");
+      // The component expects an `order` object in the response payload.
+      if (!res.data || !res.data.order) {
+        console.error("Unexpected backend response on order creation:", res.data);
+        throw new Error("Invalid response from server: 'order' object not found.");
       }
 
-      return res.data.data;
+      // Return the whole data object so the component can access `response.order`.
+      return res.data;
     } catch (err) {
       console.error("Create Order Error:", err); // ✅ Log for debugging
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -199,7 +203,10 @@ const orderSlice = createSlice({
       })
       .addCase(createNewOrder.fulfilled, (state, action) => {
         state.createLoading = false;
-        state.userOrders.push(action.payload);
+        // Push the nested order object into the state, not the whole response.
+        if (action.payload && action.payload.order) {
+          state.userOrders.push(action.payload.order);
+        }
         console.log("Order Created Successfully:", action.payload);
       })
       .addCase(createNewOrder.rejected, (state, action) => {
